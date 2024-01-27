@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    @appointments = Appointment.all
+    @appointments = current_patient.appointments
 
     render json: @appointments
   end
@@ -15,7 +15,7 @@ class AppointmentsController < ApplicationController
 
   # POST /appointments
   def create
-    @appointment = Appointment.new(appointment_params)
+    @appointment = current_patient.appointments.new(appointment_params)
 
     if @appointment.save
       render json: @appointment, status: :created, location: @appointment
@@ -42,11 +42,11 @@ class AppointmentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_appointment
-    @appointment = Appointment.find(params[:id])
+    @appointment = current_patient.appointments.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def appointment_params
-    params.require(:appointment).permit(:time, :patient_id, :doctor_id)
+    params.require(:appointment).permit(:time, :doctor_id)
   end
 end

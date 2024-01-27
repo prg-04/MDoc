@@ -21,19 +21,20 @@
 end
 
 # Create 10 patients
-10.times do
+100.times do
   Patient.create!(
-    username: Faker::Internet.username,
     first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    password: "password",
   )
 end
 
 # Create 10 appointments
-10.times do
+1000.times do
   Appointment.create!(
     doctor_id: Faker::Number.between(from: 1, to: 10),
     patient_id: Faker::Number.between(from: 1, to: 10),
-    time: Faker::Time.between(from: DateTime.now - 1, to: DateTime.now)
+    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30)
   )
 end

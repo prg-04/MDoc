@@ -47,3 +47,8 @@ group :development do
 end
 
 gem 'faker'
+
+gem 'devise'
+gem 'devise-jwt'
+gem 'jsonapi-serializer'
+gem 'rack-cors'
