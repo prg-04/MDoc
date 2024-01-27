@@ -11,7 +11,7 @@
 # Create 10 doctors
 10.times do
   Doctor.create!(
-    first_name: ::Name.first_name,
+    first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     specialization: Faker::Job.field,
     image: Faker::Avatar.image,
