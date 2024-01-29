@@ -9,11 +9,28 @@
 #   end
 
 # Create 10 doctors
+SPECIALIZATIONS = [
+  'Cardiologist',
+  'Dermatologist',
+  'Endocrinologist',
+  'Gastroenterologist',
+  'Neurologist',
+  'Ophthalmologist',
+  'Orthopedic Surgeon',
+  'Pediatrician',
+  'Psychiatrist',
+  'Urologist'
+]
+
+def select_random_specialization
+  SPECIALIZATIONS.sample
+end
+
 10.times do
   Doctor.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    specialization: Faker::Job.field,
+    specialization: select_random_specialization,
     image: Faker::Avatar.image,
     bio: Faker::Lorem.paragraph,
     fee: Faker::Number.between(from: 100, to: 1000)
