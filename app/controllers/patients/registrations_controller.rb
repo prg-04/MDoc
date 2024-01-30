@@ -12,7 +12,7 @@ class Patients::RegistrationsController < Devise::RegistrationsController
       }
     else
       render json: {
-        status:
+        error:
         { message: "Patient couldn't be created successfully. #{current_patient.errors.full_messages.to_sentence}" }
       }, status: :unprocessable_entity
     end
