@@ -8,7 +8,7 @@ class Patients::SessionsController < Devise::SessionsController
     render json: {
       status: {
         code: 200, message: 'Logged in successfully.',
-        data: { user: PatientSerializer.new(current_patient).serializable_hash[:data][:attributes] }
+        data: { patient: PatientSerializer.new(current_patient).serializable_hash[:data][:attributes] }
       }
     }, status: :ok
   end
@@ -17,7 +17,7 @@ class Patients::SessionsController < Devise::SessionsController
     if request.headers['Authorization'].present?
       jwt_payload = JWT.decode(request.headers['Authorization'].split.last,
                                Rails.application.credentials.devise_jwt_secret_key!).first
-      current_patient = User.find(jwt_payload['sub'])
+      current_patient = Patient.find(jwt_payload['sub'])
     end
 
     if current_patient
