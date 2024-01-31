@@ -6,13 +6,14 @@ Rails.application.routes.draw do
 
   devise_for :patients, path: 'auth/', path_names: {
                                          sign_in: 'login',
-                                         sign_out: 'logout',
                                          registration: 'signup'
                                        },
                         controllers: {
                           sessions: 'patients/sessions',
                           registrations: 'patients/registrations'
                         }
+
+  post 'auth/logout', to: 'patients/sessions#destroy', as: :logout
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

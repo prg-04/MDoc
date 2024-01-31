@@ -6,10 +6,10 @@ class Patients::SessionsController < Devise::SessionsController
   private
 
   def respond_with(current_patient, _opts = {})
-    jwt_token = request.env['warden-jwt_auth.token']
+    # jwt_token = request.env['warden-jwt_auth.token']
 
     render json: {
-      token: jwt_token,
+      # token: jwt_token,
       code: 200,
       message: 'Logged in successfully.',
       data: { patient: PatientSerializer.new(current_patient).serializable_hash[:data][:attributes] }

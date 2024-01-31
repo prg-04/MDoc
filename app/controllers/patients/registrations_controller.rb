@@ -1,14 +1,15 @@
 class Patients::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
+  include ActionController::Cookies
   respond_to :json
 
   private
 
   def respond_with(current_patient, _opts = {})
-    jwt_token = request.env['warden-jwt_auth.token']
+    # jwt_token = request.env['warden-jwt_auth.token']
     if resource.persisted?
       render json: {
-        token: jwt_token,
+        # token: jwt_token,
         status: { code: 200, message: 'Signed up successfully.' },
         data: PatientSerializer.new(current_patient).serializable_hash[:data][:attributes]
       }
