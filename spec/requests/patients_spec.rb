@@ -52,7 +52,6 @@ RSpec.describe 'Patients API', type: :request do
       expect(patient_response['id']).to eq(patient.id)
       expect(patient_response['first_name']).to eq(patient.first_name)
       expect(patient_response['last_name']).to eq(patient.last_name)
-      # Add more expectations based on your specific data model
 
       # You can also check the response against your database record
       expect(Patient.count).to eq(1)
