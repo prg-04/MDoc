@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Doctors', type: :request do
+RSpec.describe 'Doctors API', type: :request do
   let(:new_patient) { create(:patient) }
 
   before do
