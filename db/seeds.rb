@@ -52,6 +52,7 @@ end
   Appointment.create!(
     doctor_id: Faker::Number.between(from: 1, to: 10),
     patient_id: Faker::Number.between(from: 1, to: 10),
-    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30)
+    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30),
+    city: Faker::Address.city
   )
 end
