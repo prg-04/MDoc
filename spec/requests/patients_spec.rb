@@ -29,7 +29,6 @@ RSpec.describe 'Patients API', type: :request do
       expect(patients[0]['first_name']).to be_present
       expect(patients[0]['last_name']).to be_present
 
-      # You can also check the response against your database records
       expect(Patient.count).to eq(3)
     end
   end
@@ -48,12 +47,10 @@ RSpec.describe 'Patients API', type: :request do
       # Parse the JSON response
       patient_response = JSON.parse(response.body)
 
-      # Assuming your Patient model has first_name and last_name attributes
       expect(patient_response['id']).to eq(patient.id)
       expect(patient_response['first_name']).to eq(patient.first_name)
       expect(patient_response['last_name']).to eq(patient.last_name)
 
-      # You can also check the response against your database record
       expect(Patient.count).to eq(1)
     end
 
@@ -85,7 +82,6 @@ RSpec.describe 'Patients API', type: :request do
       # Parse the JSON response
       patient_response = JSON.parse(response.body)
 
-      # Assuming your Patient model has first_name and last_name attributes
       expect(patient_response['first_name']).to eq('John')
       expect(patient_response['last_name']).to eq('Doe')
     end
@@ -120,7 +116,6 @@ RSpec.describe 'Patients API', type: :request do
       # Parse the JSON response
       patient_response = JSON.parse(response.body)
 
-      # Assuming your Patient model has first_name and last_name attributes
       expect(patient_response['first_name']).to eq('New')
       expect(patient_response['last_name']).to eq('Name')
     end

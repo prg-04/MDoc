@@ -30,7 +30,6 @@ RSpec.describe 'Appointments API', type: :request do
       # Parse the JSON response
       appointments_response = JSON.parse(response.body)
 
-      # Add expectations based on your data model and serialization
       expect(appointments_response.size).to eq(3)
     end
 
@@ -55,7 +54,6 @@ RSpec.describe 'Appointments API', type: :request do
       # Parse the JSON response
       appointment_response = JSON.parse(response.body)
 
-      # Add expectations based on your data model and serialization
       expect(appointment_response['doctor_id']).to eq(new_doctor.id)
       expect(appointment_response['patient_id']).to eq(new_patient.id)
       expect(appointment_response['time']).to be_present
@@ -95,7 +93,6 @@ RSpec.describe 'Appointments API', type: :request do
         # Parse the JSON response
         appointment_response = JSON.parse(response.body)
 
-        # Add expectations based on your data model and serialization
         expect(appointment_response['time']).to be_present
       end
     end
@@ -121,15 +118,11 @@ RSpec.describe 'Appointments API', type: :request do
 
   describe 'PATCH /appointments/1' do
     let(:new_appointment) { create(:appointment) }
-    # let(:updated_attributes) { DateTime.now + 1.hour }
+    let(:updated_attributes) { { time: DateTime.now.strftime('%FT%T.%LZ') } }
 
     context 'with valid parameters' do
       it 'updates the specified appointment' do
-        # new_appointment = create(:appointment)
-        updated_time = DateTime.now
-        puts "updated_time: #{updated_time}"
-        puts "new_appointment: #{new_appointment.id}"
-        patch "/appointments/#{new_appointment.id}", params: { appointment: { time: updated_time } }
+        patch "/appointments/#{new_appointment.id}", params: { appointment: updated_attributes }
 
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq('application/json; charset=utf-8')
@@ -137,14 +130,13 @@ RSpec.describe 'Appointments API', type: :request do
         # Parse the JSON response
         appointment_response = JSON.parse(response.body)
 
-        # Add expectations based on your data model and serialization
-        expect(appointment_response['time']).to eq(updated_time)
+        expect(appointment_response['time']).to eq(updated_attributes.fetch(:time))
       end
     end
 
     context 'with invalid parameters' do
       it 'returns unprocessable_entity status' do
-        patch "/appointments/#{appointment.id}", params: { appointment: { time: nil, doctor_id: nil } }
+        patch "/appointments/#{new_appointment.id}", params: { appointment: { time: nil, doctor_id: nil } }
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json; charset=utf-8')
@@ -155,7 +147,39 @@ RSpec.describe 'Appointments API', type: :request do
       # Clear authentication for this example
       sign_out new_patient
 
-      patch "/appointments/#{appointment.id}", params: { appointment: updated_attributes }
+      patch "/appointments/#{new_appointment.id}", params: { appointment: updated_attributes }
+
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe 'DELETE /appointments/1' do
+    let(:patient) { create(:patient) }
+    let(:appointment) { create(:appointment) }
+
+    it 'deletes the specified appointment for the authenticated patient' do
+      delete "/appointments/#{appointment.id}"
+
+      expect(response).to have_http_status(:no_content)
+
+      # Check that the appointment is deleted
+      expect { appointment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'returns not found for an appointment that does not belong to the patient' do
+      another_patient = create(:patient)
+      another_appointment = create(:appointment, patient: another_patient)
+
+      delete "/appointments/#{another_appointment.id}"
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns unauthorized without authentication' do
+      # Clear authentication for this example
+      sign_out new_patient
+
+      delete "/appointments/#{appointment.id}"
 
       expect(response).to have_http_status(:unauthorized)
     end
