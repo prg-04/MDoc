@@ -2,10 +2,12 @@ class AppointmentsController < ApplicationController
   before_action :set_appointment, only: %i[show update destroy]
 
   # GET /appointments
-  def index
-    @appointments = current_patient.appointments
+   def index
+    @appointments = current_patient.appointments.includes(:doctor)
+    
+     puts "Appointments: #{@appointments.inspect}"
 
-    render json: @appointments
+    render json: @appointments.to_json(include: { doctor: { only: :first_name } })
   end
 
   # GET /appointments/1
@@ -49,4 +51,5 @@ class AppointmentsController < ApplicationController
   def appointment_params
     params.require(:appointment).permit(:time, :doctor_id, :city)
   end
+
 end
