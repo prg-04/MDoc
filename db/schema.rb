@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_27_204638) do
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "time"
+    t.string "city"
     t.bigint "patient_id", null: false
     t.bigint "doctor_id", null: false
     t.datetime "created_at", null: false

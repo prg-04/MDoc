@@ -10,7 +10,8 @@ class Patients::RegistrationsController < Devise::RegistrationsController
     if resource.persisted?
       render json: {
         # token: jwt_token,
-        status: { code: 200, message: 'Signed up successfully.' },
+        code: 200,
+        message: 'Signed up successfully.',
         data: PatientSerializer.new(current_patient).serializable_hash[:data][:attributes]
       }
     else
