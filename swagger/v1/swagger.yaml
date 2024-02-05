@@ -49,45 +49,18 @@ paths:
                   - first_name
                   - last_name
                   - email
-    /patients/{id}:
-      get:
-        summary: Retrieve a single patient by ID
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: Successfully retrieved a patient
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    email:
-                      type: string
-                  required:
-                    - first_name
-                    - last_name
-                    - email
-          '404':
-            description: Patient not found
-      patch:
-        summary: Update a patient by ID
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        requestBody:
+  '/patients/{id}':
+    get:
+      summary: Retrieve a single patient by ID
+      parameters:
+        - name: id
+          in: path
           required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved a patient
           content:
             application/json:
               schema:
@@ -103,39 +76,66 @@ paths:
                   - first_name
                   - last_name
                   - email
-        responses:
-          '200':
-            description: Successfully updated a patient
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    email:
-                      type: string
-                  required:
-                    - first_name
-                    - last_name
-                    - email
-          '404':
-            description: Patient not found
-      delete:
-        summary: Delete a patient by ID
-        parameters:
-          - name: id
-            in: path
-            required: true
+        '404':
+          description: Patient not found
+    patch:
+      summary: Update a patient by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: integer
-        responses:
-          '204':
-            description: Successfully deleted a patient
-          '404':
-            description: Patient not found
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+              required:
+                - first_name
+                - last_name
+                - email
+      responses:
+        '200':
+          description: Successfully updated a patient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  first_name:
+                    type: string
+                  last_name:
+                    type: string
+                  email:
+                    type: string
+                required:
+                  - first_name
+                  - last_name
+                  - email
+        '404':
+          description: Patient not found
+    delete:
+      summary: Delete a patient by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted a patient
+        '404':
+          description: Patient not found
 
   # Doctors
   /doctors:
@@ -199,8 +199,7 @@ paths:
                   - image
                   - bio
                   - fee
-
-  /doctors/{id}:
+  '/doctors/{id}':
     get:
       summary: Retrieve a single doctor by ID
       parameters:
@@ -238,16 +237,43 @@ paths:
                   - fee
         '404':
           description: Doctor not found
-      patch:
-        summary: Update a doctor by ID
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        requestBody:
+    patch:
+      summary: Update a doctor by ID
+      parameters:
+        - name: id
+          in: path
           required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                specialization:
+                  type: string
+                image:
+                  type: string
+                bio:
+                  type: string
+                fee:
+                  type: string
+              required:
+                - first_name
+                - last_name
+                - specialization
+                - image
+                - bio
+                - fee
+      responses:
+        '200':
+          description: Successfully updated a doctor
           content:
             application/json:
               schema:
@@ -272,50 +298,21 @@ paths:
                   - image
                   - bio
                   - fee
-        responses:
-          '200':
-            description: Successfully updated a doctor
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    first_name:
-                      type: string
-                    last_name:
-                      type: string
-                    specialization:
-                      type: string
-                    image:
-                      type: string
-                    bio:
-                      type: string
-                    fee:
-                      type: string
-                  required:
-                    - first_name
-                    - last_name
-                    - specialization
-                    - image
-                    - bio
-                    - fee
-          '404':
-            description: Doctor not found
-      delete:
-        summary: Delete a doctor by ID
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        responses:
-          '204':
-            description: Successfully deleted a doctor
-          '404':
-            description: Doctor not found
-
-  # Appointments
+        '404':
+          description: Doctor not found
+    delete:
+      summary: Delete a doctor by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted a doctor
+        '404':
+          description: Doctor not found
   /appointments:
     get:
       summary: Retrieve a list of appointments for the current patient
@@ -361,8 +358,7 @@ paths:
                   - time
                   - doctor_id
                   - city
-
-  /appointments/{id}:
+  '/appointments/{id}':
     get:
       summary: Retrieve a single appointment by ID for the current patient
       parameters:
@@ -392,16 +388,35 @@ paths:
                   - city
         '404':
           description: Appointment not found
-      patch:
-        summary: Update an appointment by ID for the current patient
-        parameters:
-          - name: id
-            in: path
-            required: true
-            schema:
-              type: integer
-        requestBody:
+    patch:
+      summary: Update an appointment by ID for the current patient
+      parameters:
+        - name: id
+          in: path
           required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time:
+                  type: string
+                  format: date-time
+                doctor_id:
+                  type: integer
+                city:
+                  type: string
+              required:
+                - time
+                - doctor_id
+                - city
+      responses:
+        '200':
+          description: Successfully updated an appointment
           content:
             application/json:
               schema:
@@ -418,37 +433,175 @@ paths:
                   - time
                   - doctor_id
                   - city
-        responses:
-          '200':
-            description: Successfully updated an appointment
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    time:
-                      type: string
-                      format: date-time
-                    doctor_id:
-                      type: integer
-                    city:
-                      type: string
-                  required:
-                    - time
-                    - doctor_id
-                    - city
-          '404':
-            description: Appointment not found
-      delete:
-        summary: Delete an appointment by ID for the current patient
-        parameters:
-          - name: id
-            in: path
-            required: true
+        '404':
+          description: Appointment not found
+    delete:
+      summary: Delete an appointment by ID for the current patient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successfully deleted an appointment
+        '404':
+          description: Appointment not found
+  /auth/signup:
+    post:
+      summary: Register a new patient
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: integer
-        responses:
-          '204':
-            description: Successfully deleted an appointment
-          '404':
-            description: Appointment not found
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - first_name
+                - last_name
+                - email
+                - password
+      responses:
+        '200':
+          description: Successfully registered a new patient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                    required:
+                      - first_name
+                      - last_name
+                      - email
+        '422':
+          description: Failed to register a new patient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                required:
+                  - error
+        '500':
+          description: Internal Server Error
+  /auth/login:
+    post:
+      summary: Log in a patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Successfully logged in a patient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      patient:
+                        type: object
+                        properties:
+                          first_name:
+                            type: string
+                          last_name:
+                            type: string
+                          email:
+                            type: string
+                        required:
+                          - first_name
+                          - last_name
+                          - email
+        '401':
+          description: Unauthorized - Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+  /auth/logout:
+    delete:
+      summary: Log out a patient
+      responses:
+        '200':
+          description: Successfully logged out a patient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
+        '401':
+          description: Unauthorized - No active session found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                  - code
+                  - message
