@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
   def index
     @appointments = current_patient.appointments
 
-    render json: @appointments
+    render json: @appointments.to_json(include: { doctor: { only: %i[first_name last_name] } })
   end
 
   # GET /appointments/1
