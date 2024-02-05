@@ -4,7 +4,8 @@ def create_new_appointment(doctor, patient)
   Appointment.create!(
     doctor_id: doctor.id,
     patient_id: patient.id,
-    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30)
+    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30),
+    city: Faker::Address.city
   )
 end
 

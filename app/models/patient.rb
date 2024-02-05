@@ -11,4 +11,6 @@ class Patient < ApplicationRecord
 
   has_many :appointments, dependent: :destroy
   has_many :doctors, through: :appointments, dependent: :destroy
+
+  validates :first_name, :last_name, :email, presence: true
 end

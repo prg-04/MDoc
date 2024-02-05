@@ -26,33 +26,35 @@ def select_random_specialization
   SPECIALIZATIONS.sample
 end
 
-10.times do
-  Doctor.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    specialization: select_random_specialization,
-    image: Faker::Avatar.image,
-    bio: Faker::Lorem.paragraph,
-    fee: Faker::Number.between(from: 100, to: 1000)
-  )
+if (Doctor.count < 5)
+  5.times do
+    Doctor.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      specialization: select_random_specialization,
+      image: Faker::Avatar.image,
+      bio: Faker::Lorem.paragraph,
+      fee: Faker::Number.between(from: 100, to: 1000)
+    )
+  end
 end
 
 # Create 10 patients
-100.times do
-  Patient.create!(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    email: Faker::Internet.email,
-    password: "password",
-  )
-end
+# 10.times do
+#   Patient.create!(
+#     first_name: Faker::Name.first_name,
+#     last_name: Faker::Name.last_name,
+#     email: Faker::Internet.email,
+#     password: "password",
+#   )
+# end
 
 # Create 10 appointments
-1000.times do
-  Appointment.create!(
-    doctor_id: Faker::Number.between(from: 1, to: 10),
-    patient_id: Faker::Number.between(from: 1, to: 10),
-    time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30),
-    city: Faker::Address.city
-  )
-end
+# 20.times do
+#   Appointment.create!(
+#     doctor_id: Faker::Number.between(from: 1, to: 5),
+#     patient_id: Faker::Number.between(from: 1, to: 10),
+#     time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 30),
+#     city: Faker::Address.city
+#   )
+# end

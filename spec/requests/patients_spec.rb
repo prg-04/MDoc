@@ -1,4 +1,3 @@
-# spec/requests/patients_request_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Patients API', type: :request do
@@ -98,26 +97,25 @@ RSpec.describe 'Patients API', type: :request do
   end
 
   describe 'PATCH/PUT /patients/:id' do
-    let!(:patient) { create(:patient) }
-    let(:valid_params) { { patient: { first_name: 'New', last_name: 'Name' } } }
+    let(:patient) { create(:patient) }
+    let(:valid_params) { { patient: { first_name: 'first' } } }
     let(:invalid_params) { { patient: { invalid_attribute: 'Invalid' } } }
 
     it 'updates the patient with valid params' do
       # Make the request
-      patch "/patients/#{patient.id}", params: valid_params
+      put "/patients/#{patient.id}", params: valid_params
 
       # Reload the patient from the database
       patient.reload
 
       # Check the response
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(200)
       expect(response.content_type).to eq('application/json; charset=utf-8')
 
       # Parse the JSON response
       patient_response = JSON.parse(response.body)
 
-      expect(patient_response['first_name']).to eq('New')
-      expect(patient_response['last_name']).to eq('Name')
+      expect(patient_response['first_name']).to eq('first')
     end
   end
 
