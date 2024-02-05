@@ -10,7 +10,13 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1
   def show
-    render json: @appointment
+    # render json: { appointment: @appointment,
+    #                doctor: "#{@appointment.doctor.first_name} #{@appointment.doctor.last_name}" }
+
+    render json: @appointment.to_json(include: { doctor: { only: %i[first_name last_name] } })
+
+    # @appointments = current_patient.appointments.includes(:doctor)
+    # render json: @appointments.to_json(include: { doctor: { only: :first_name } })
   end
 
   # POST /appointments
