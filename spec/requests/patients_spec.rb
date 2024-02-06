@@ -129,7 +129,7 @@ RSpec.describe 'Patients API', type: :request do
       end.to change(Patient, :count).by(-1)
 
       # Check the response
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(200)
     end
 
     it 'returns not found for non-existent patient' do

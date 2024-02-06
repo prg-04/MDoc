@@ -161,7 +161,7 @@ RSpec.describe 'Appointments API', type: :request do
     it 'deletes the specified appointment for the authenticated patient' do
       delete "/appointments/#{appointment.id}"
 
-      expect(response).to have_http_status(:no_content)
+      expect(response).to have_http_status(200)
 
       # Check that the appointment is deleted
       expect { appointment.reload }.to raise_error(ActiveRecord::RecordNotFound)

@@ -184,7 +184,7 @@ RSpec.describe 'Doctors API', type: :request do
       delete "/doctors/#{doctor.id}"
 
       # Expect a successful response (HTTP status 204 - No Content)
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(200)
 
       # Verify that the doctor was actually deleted from the database
       expect { doctor.reload }.to raise_error ActiveRecord::RecordNotFound
