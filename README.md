@@ -97,10 +97,13 @@ bundle install
 
 ```sh
 1. Remove config/master.key and config/credentials.yml.enc if they exist.
-2. Run `rails secret`.  Copy the key.
-3. Run EDITOR="code --wait" bin/rails credentials:edit
+2. Run: `rails secret`.  Copy the key.
+3. Run: EDITOR="code --wait" bin/rails credentials:edit
 4. In the editor that opens, add this:  devise_jwt_secret_key: <the key you copied in step 2>
-5. Save the file and close the editor.  New master.key, credentials.yml.enc files will be generated, and the key will be stored in `Rails.application.credentials.devise_jwt_secret_key`.
+5. Save the file and close the editor.
+
+New master.key, credentials.yml.enc files will be generated,
+and the key will be stored in `Rails.application.credentials.devise_jwt_secret_key`.
 ```
 
 ```sh
@@ -114,10 +117,6 @@ rails s
 ### Tests
 
 After setup, you ran use the comman below to run RSpec
-
-```sh
-bundle install
-```
 
 ```sh
 rspec
