@@ -35,7 +35,11 @@ class PatientsController < ApplicationController
 
   # DELETE /patients/1
   def destroy
-    @patient.destroy!
+    if @patient.destroy
+      render json: { message: 'Patient deleted successfully' }, status: :ok
+    else
+      render json: { error: 'Failed to delete patient' }, status: :unprocessable_entity
+    end
   end
 
   private

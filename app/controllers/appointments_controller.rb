@@ -35,7 +35,11 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1
   def destroy
-    @appointment.destroy!
+    if @appointment.destroy
+      render json: { message: 'Appointment deleted successfully' }, status: :ok
+    else
+      render json: { error: 'Failed to delete appointment' }, status: :unprocessable_entity
+    end
   end
 
   private
